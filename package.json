@@ -1,6 +1,6 @@
 {
   "name": "electron-updater-demo",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "main": "main.js",
   "description": "A complete example showing how to use `electron-updater`",
   "author": "GuanWeihua",
