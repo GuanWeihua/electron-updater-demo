@@ -1,28 +1,65 @@
 {
-  "name": "electron-updater-example",
-  "version": "0.7.1",
+  "name": "electron-updater-demo",
+  "version": "0.8.1",
   "main": "main.js",
-  "description": "electron-updater example project",
-  "author": "Matt Haggard",
+  "description": "A complete example showing how to use `electron-updater`",
+  "author": "GuanWeihua",
+  "homepage": "https://github.com/GuanWeihua/electron-updater-demo",
+  "bugs": {
+    "url": "https://github.com/GuanWeihua/electron-updater-demo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GuanWeihua/electron-updater-demo.git"
+  },
   "scripts": {
-    "publish": "build -p always"
+    "release": "electron-builder build -p never"
   },
   "devDependencies": {
-    "electron": "^3.0.2",
-    "electron-builder": "^20.28.4"
+    "electron": "^7.1.9",
+    "electron-builder": "^22.2.0"
   },
   "dependencies": {
-    "electron-log": "^1.3.0",
-    "electron-updater": "^4.0.6"
+    "electron-log": "^4.0.3",
+    "electron-updater": "^4.2.0"
   },
   "build": {
-    "appId": "com.github.iffy.electronupdaterexample",
-    "mac": {
-      "category": "your.app.category.type",
+    "appId": "com.github.GuanWeihua.ElectronUpdaterDemo",
+    "productName": "ElectronUpdaterDemo",
+    "copyright": "Copyright © 2020 ${author}",
+    "directories": {
+      "output": "./app"
+    },
+    "files": [
+      "!dist/**/*",
+      "!.github/**/*",
+      "!.vscode/**/*"
+    ],
+    "nsis": {
+      "oneClick": false,
+      "artifactName": "${productName}-x64-${version}.${ext}",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "win": {
+      "icon": "./assets/icon.png",
       "target": [
-        "zip",
-        "dmg"
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
       ]
-    }
+    },
+    "publish": [
+      {
+        "owner": "GuanWeihua",
+        "repo": "electron-updater-demo",
+        "provider": "github",
+        "releaseType": "release"
+      }
+    ]
   }
 }
