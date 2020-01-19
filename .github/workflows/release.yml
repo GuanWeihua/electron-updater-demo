@@ -1,0 +1,70 @@
+name: Create Release
+
+on:
+  push:
+    branches: dev
+
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - name: 1、Checkout code！
+        uses: actions/checkout@master
+      
+      - name: 2、Get package.json context！
+        id: package_context
+        uses: GenesisSam/get-simple-file-action@v1.0.4
+        with:
+          file-name: "package.json" 
+      
+      - name: 3、Get laster version！
+        id: get_version
+        uses: gr2m/get-json-paths-action@v1.x
+        with: 
+          json: ${{ steps.package_context.outputs.data }}
+          version: "version"
+         
+      - name: 4、Build project
+        run: |
+          npm install
+          npm run release
+        
+      - name: 5、Create CHANGELOG！
+        run: |
+          npm run create:CurrentChangelog
+          
+      - name: 6、Read changelog content!
+        id: current_changelog_content
+        uses: GenesisSam/get-simple-file-action@v1.0.4
+        with:
+          file-name: "CURRENT_CHANGELOG.md" 
+        
+      - name: 7、Create Release
+        id: create_release
+        uses: actions/create-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: github.ref
+          body: ${{ steps.current_changelog_content.outputs.data }}
+          draft: false
+          prerelease: false
+
+      - name: 8、Upload Release Asset
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with: 
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./app/weibo.exe
+          asset_name: weibo-${{ steps.get_version.outputs.version }}.exe
+          asset_content_type: application/octet-stream 
