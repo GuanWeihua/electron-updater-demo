@@ -59,7 +59,7 @@ jobs:
           prerelease: false
 
       - name: 8、Upload Release Asset
-        id: upload_release_asset
+        id: upload_release_asset_1
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -70,7 +70,7 @@ jobs:
           asset_content_type: application/octet-stream 
 
       - name: 8、Upload Release Asset
-        id: upload_release_asset
+        id: upload_release_asset_2
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -81,7 +81,7 @@ jobs:
           asset_content_type: application/octet-stream 
 
       - name: 8、Upload Release Asset
-        id: upload_release_asset
+        id: upload_release_asset_3
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
